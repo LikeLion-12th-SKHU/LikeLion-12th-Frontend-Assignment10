@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "/",
+  baseURL: "https://hj-devlog.vercel.app/api",
 });
 
 export default instance;
