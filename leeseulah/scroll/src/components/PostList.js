@@ -1,25 +1,28 @@
 import React from "react";
-import axios from "axios";
+import instance from "../api/axiosInstance";
+
 import { useInfiniteQuery } from "react-query";
 import styled from "styled-components";
 
 const fetchPosts = async ({ pageParam = 0 }) => {
   const start = pageParam * 6;
   const end = start + 6;
-  const response = await axios.get(
-    `https://hj-devlog.vercel.app/api/posts?start=${start}&end=${end}`
-  );
+  const response = await instance.get(`/posts?start=${start}&end=${end}`);
   return response.data;
 };
 
 const PostList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-    useInfiniteQuery("posts", fetchPosts, {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length;
-        return nextPage < 5 ? nextPage : undefined;
-      },
-    });
+    useInfiniteQuery(
+      "posts",
+      ({ pageParam = 0 }) => fetchPosts({ pageParam }),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          const nextPage = allPages.length;
+          return lastPage.length < 6 ? undefined : nextPage;
+        },
+      }
+    );
 
   return (
     <Container>
