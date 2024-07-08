@@ -9,17 +9,18 @@ const PostList = () => {
     data,
     fetchNextPage,
     error,
-    hasNextPage,
-    isFetchingNextPage,
+    hasNextPage, // 다음 페이지가 있는지 여부
+    isFetchingNextPage, // 다음 페이지를 가져오는 중인지 여부
     status,
   } = useInfiniteQuery({
-    queryKey: ["posts"],
-    queryFn: fetchPosts,
+    queryKey: ["posts"], // 쿼리의 키 배열
+    queryFn: fetchPosts, // 데이터를 가져오는 비동기 함수
     getNextPageParam: (lastPage, allPages) => {
+      // 다음 페이지의 매개변수를 계산하는 함수
       if (lastPage.posts.length === 6) {
-        return allPages.length + 1;
+        return allPages.length + 1; // 마지막 페이지에서 6개의 포스트를 반환했을 때 다음 페이지의 인덱스를 반환
       } else {
-        return undefined;
+        return undefined; // 더 이상 페이지가 없음
       }
     },
   });
@@ -59,7 +60,7 @@ const PostList = () => {
         </React.Fragment>
       ))}{" "}
       <S.MorePostBtn
-        onClick={() => fetchNextPage()}
+        onClick={() => fetchNextPage()} // 다음 페이지를 가져오는 함수 호출
         disabled={!hasNextPage || isFetchingNextPage}>
         {" "}
         {getMorePostBtnText()}{" "}

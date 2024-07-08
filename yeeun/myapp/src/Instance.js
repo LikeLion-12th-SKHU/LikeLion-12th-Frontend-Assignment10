@@ -1,4 +1,4 @@
-//axiosInstance.js
+//Instance.js
 
 import axios from "axios";
 
