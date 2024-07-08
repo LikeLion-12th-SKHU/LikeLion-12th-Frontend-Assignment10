@@ -1,8 +1,15 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
-import { fetchPosts } from "./queryFn";
+import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import BlogPostList from "./BlogPostList";
+
+const queryClient = new QueryClient();
+
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BlogPostList />
+    </QueryClientProvider>
+  );
+};
+
+export default App;
